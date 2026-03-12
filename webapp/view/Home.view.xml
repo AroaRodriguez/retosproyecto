@@ -3,7 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:filterBar="sap.ui.comp.filterbar"
+    xmlns:fb="sap.ui.comp.filterbar"
     displayBlock="true">
     <Page id="page">
         <customHeader>
@@ -24,6 +24,33 @@
             </Bar>
         </customHeader>
         <content>
+        <fb:FilterBar id="filterBar" header="{i18n>busqueda}" search=".buscar"> <!--Definido botón GO, SAP lo hace, dispara la logica con el filterBar-->
+                <fb:filterGroupItems>
+                    
+                    <fb:FilterGroupItem id="filtrarSolicitud" name="Solicitud" label="{i18n>solicitud}" groupName="G1" visibleInFilterBar="true"> <!--visibilidad de la barra visibleInFilterBar-->
+                        <fb:control>
+                            <Input id="inSolicitud" placeholder="número" /> <!--placeholder = igual a Android hinit-->
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <fb:FilterGroupItem id="filtrarTipologia" name="Tipologia" label="{i18n>tipologia}" groupName="G1" visibleInFilterBar="true">
+                        <fb:control>
+                            <Input id="inTipologia" showValueHelp="true" valueHelpRequest=".ayudaRequerida" placeholder="tipo"  /> 
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <fb:FilterGroupItem id="filtrarCategorizacion" name="Categorizacion" label="{i18n>categoria}" groupName="G1" visibleInFilterBar="true">
+                        <fb:control>
+                            <ComboBox id="cbCategorizacion"> <!-- Combo box de categorización-->
+                                <core:Item id="accion" key="MKT" text="{i18n>accion}" />
+                                <core:Item id="muestras" key="MUS" text="{i18n>muestras}" />
+                                <core:Item id="compras" key="MUS" text="{i18n>compras}" />
+                            </ComboBox>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                </fb:filterGroupItems>
+            </fb:FilterBar>
             </content>
     </Page>
 </mvc:View>
