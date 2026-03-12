@@ -5,25 +5,6 @@
     xmlns:core="sap.ui.core"
     xmlns:fb="sap.ui.comp.filterbar"
     displayBlock="true">
-    <Page id="page">
-        <customHeader>
-            <Bar id="bar">
-                <contentLeft>
-                    <HBox id="cabecera" >
-                    <Title id="standard" 
-                        text="{i18n>title}" 
-                        titleStyle="H4" 
-                        class="tituloStandard sapUiTinyMarginEnd" />
-                    <Button 
-                        id="btnDesglose"
-                        icon="sap-icon://slim-arrow-down" 
-                        type="Transparent"
-                        press=".pulsarDesplegabable" />
-                    </HBox>
-                </contentLeft>
-            </Bar>
-        </customHeader>
-        <content>
         <fb:FilterBar id="filterBar" header="{i18n>busqueda}" search=".buscar"> <!--Definido botón GO, SAP lo hace, dispara la logica con el filterBar-->
                 <fb:filterGroupItems>
                     
@@ -35,7 +16,7 @@
 
                     <fb:FilterGroupItem id="filtrarTipologia" name="Tipologia" label="{i18n>tipologia}" groupName="G1" visibleInFilterBar="true">
                         <fb:control>
-                            <Input id="inTipologia" showValueHelp="true" valueHelpRequest=".ayudaRequerida" placeholder="tipo"  /> 
+                            <Input id="inTipologia" placeholder="tipo"  /> 
                         </fb:control>
                     </fb:FilterGroupItem>
 
@@ -51,6 +32,57 @@
 
                 </fb:filterGroupItems>
             </fb:FilterBar>
-            </content>
-    </Page>
+            
+    <Table id="idTable"
+        items="{/SolicitudesSet}"
+        mode="MultiSelect"
+        growing="true"
+        growingThreshold="10"
+        sticky="HeaderToolbar,ColumnHeaders"
+        class="sapUiResponsiveMargin"
+        width="auto">
+        
+        <headerToolbar>
+            <OverflowToolbar id="toolbar">
+                <Title id="tituloLista" text="{i18n>listaSolicitudes}" titleStyle="H4" />
+                <ToolbarSpacer id="toolbarspacer" />
+                <!-- Crear botones crear, borrar, etc...-->
+            </OverflowToolbar>
+        </headerToolbar>
+
+        <columns>
+            <Column id="columnaNum" width="8rem">
+                <Text id="txtColSol" text="{i18n>solicitud}" />
+            </Column>
+            <Column id="columnaTipo" minScreenWidth="Tablet" demandPopin="true">
+                <Text id="txtColTipo" text="{i18n>tipologia}" /> <!-- preguntar si se pueden aprovechar los titulos.-->
+            </Column>
+            <Column id="columnaCateg" minScreenWidth="Tablet" demandPopin="true">
+                <Text id="txtColCateg" text="{i18n>categoria}" />
+            </Column>
+            <Column id="estado" hAlign="Center">
+                <Text id="txtColestado" text="{i18n>estado}" />
+            </Column>
+            <Column id="precio" hAlign="Center">
+                <Text id="txtColprecio" text="{i18n>precio}" />
+            </Column>
+        </columns>
+
+        <items>
+            <ColumnListItem id="listaColumna" vAlign="Middle" type="Navigation" press=".onItemPress">
+                <cells>
+                    <Text id="id2" text="{id}" />
+                    <Text id="tipo2" text="{tipologia}" />
+                    <Text id="categoria2" text="{categoria}" />
+                    <ObjectStatus id="objectEstado"
+                        text="{estado}"
+                        state="{path: 'estado', formatter: '.formatState'}" />
+                    <ObjectNumber id="objectNumero"
+                        number="{precio}"
+                        unit="EUR"
+                        state="Information" />    
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
 </mvc:View>
