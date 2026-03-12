@@ -1,6 +1,29 @@
-<mvc:View controllerName="retosproyecto.controller.Home"
+<mvc:View 
+    controllerName="retosproyecto.controller.Home"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:filterBar="sap.ui.comp.filterbar"
+    displayBlock="true">
+    <Page id="page">
+        <customHeader>
+            <Bar id="bar">
+                <contentLeft>
+                    <HBox id="cabecera" >
+                    <Title id="standard" 
+                        text="{i18n>title}" 
+                        titleStyle="H4" 
+                        class="tituloStandard sapUiTinyMarginEnd" />
+                    <Button 
+                        id="btnDesglose"
+                        icon="sap-icon://slim-arrow-down" 
+                        type="Transparent"
+                        press=".pulsarDesplegabable" />
+                    </HBox>
+                </contentLeft>
+            </Bar>
+        </customHeader>
+        <content>
+            </content>
     </Page>
 </mvc:View>

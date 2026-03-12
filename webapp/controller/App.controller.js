@@ -6,5 +6,7 @@ sap.ui.define([
   return BaseController.extend("retosproyecto.controller.App", {
       onInit() {
       }
+
+      //Vacío aquí no se pone nada
   });
 });

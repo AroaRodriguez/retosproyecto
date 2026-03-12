@@ -5,6 +5,10 @@ sap.ui.define([
 
     return Controller.extend("retosproyecto.controller.Home", {
         onInit() {
-        }
+        }, 
+
+        pulsarDesplegabable: function (oEvent){
+            sap.m.MessageToast.show("Abriendo variantes");
+        } 
     });
 });
