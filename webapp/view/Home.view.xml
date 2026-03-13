@@ -16,7 +16,7 @@
 
                     <fb:FilterGroupItem id="filtrarTipologia" name="Tipologia" label="{i18n>tipologia}" groupName="G1" visibleInFilterBar="true">
                         <fb:control>
-                            <Input id="inTipologia" placeholder="tipo"  /> 
+                             <Input id="inTipologia" showValueHelp="true" valueHelpRequest=".ayudaRequerida" placeholder="tipo"  /> 
                         </fb:control>
                     </fb:FilterGroupItem>
 
