@@ -39,10 +39,10 @@ sap.ui.define([
             // Cargamos el fragmento solo si no existe ya en memoria
             if (!this._pAyudaDialog) {
                 this._pAyudaDialog = await this.loadFragment({
-                    name: "retosproyecto.fragment.DialogHelp" 
+                    name: "retosproyecto.fragment.DialogHelp"   
                 });
+                this.getView().addDependent(this._pAyudaDialog);
             }    
-            
             // Abrimos el diálogo
             this._pAyudaDialog.open();
         },

@@ -8,11 +8,7 @@
         cancel=".onValueHelpClose"
         items="{/TipologiasSet}"> 
         <StandardListItem id="estandarlist"
-            title="{i18n>nombre1}"
-            description="{id}"
-            type ="Active" />
-        <StandardListItem id="estandarlist2"
-            title="{i18n>nombre2}"
+            title="{nombre}"
             description="{id}"
             type ="Active" />
     </SelectDialog>
