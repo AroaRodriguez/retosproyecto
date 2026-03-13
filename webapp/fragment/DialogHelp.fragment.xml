@@ -6,10 +6,10 @@
         search=".onValueHelpSearch"
         confirm=".onValueHelpConfirm"
         cancel=".onValueHelpClose"
-        items="{TipologiasSet}"> 
+        items="{listModel>/TipologiasSet}"> 
         <StandardListItem id="estandarlist"
-            title="{tipologia}"
-            description="{id}"
+            title="{listModel>tipologia}"
+            description="{listModel>id}"
             type ="Active" />
     </SelectDialog>
 </core:FragmentDefinition>

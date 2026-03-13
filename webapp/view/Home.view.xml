@@ -34,7 +34,7 @@
             </fb:FilterBar>
             
     <Table id="idTable"
-        items="{/SolicitudesSet}"
+        items="{listModel>/SolicitudesSet}"
         mode="MultiSelect"
         growing="true"
         growingThreshold="10"
@@ -71,7 +71,7 @@
         <items>
             <ColumnListItem id="listaColumna" vAlign="Middle" type="Navigation" press=".onItemPress">
                 <cells>
-                    <Text id="id2" text="{id}" />
+                    <Text id="id2" text="{listModel>id}" />
                     <Text id="tipo2" text="{tipologia}" />
                     <Text id="categoria2" text="{categoria}" />
                     <ObjectStatus id="objectEstado"

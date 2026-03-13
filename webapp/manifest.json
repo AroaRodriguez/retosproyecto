@@ -52,7 +52,7 @@
           "bundleName": "retosproyecto.i18n.i18n"
         }
       },
-      "": {
+      "listModel": {
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/List.json"
       }
