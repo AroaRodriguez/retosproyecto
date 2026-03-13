@@ -21,5 +21,17 @@
             "estado": "Rechazado",
             "precio": 550.00
         }
+    ],
+    "TipologiasSet" : [
+        { "id": "01",
+         "tipologia": "Individual" 
+        },
+        { "id": "02", 
+        "tipologia": "Múltiple"
+        },
+        { "id": "03", 
+        "tipologia": "Urgente" 
+        }
     ]
 }
+

@@ -6,9 +6,9 @@
         search=".onValueHelpSearch"
         confirm=".onValueHelpConfirm"
         cancel=".onValueHelpClose"
-        items="{/TipologiasSet}"> 
+        items="{TipologiasSet}"> 
         <StandardListItem id="estandarlist"
-            title="{nombre}"
+            title="{tipologia}"
             description="{id}"
             type ="Active" />
     </SelectDialog>
