@@ -11,6 +11,10 @@ sap.ui.define([
         
         onInit: function () {
 
+
+
+            
+
         },
 
         buscar: async function () {
@@ -31,16 +35,6 @@ sap.ui.define([
             } if (sCategorizacion) {
                aFilters.push(new Filter("categoria", FilterOperator.Contains, sCategorizacion)); 
             }
-
-            // Cargamos el fragmento solo si no existe ya en memoria
-            if (!this._pAyudaDialog) {
-                this._pAyudaDialog = await this.loadFragment({
-                    name: "retosproyecto.fragment.DialogHelp"   
-                });
-                this.getView().addDependent(this._pAyudaDialog);
-            }    
-            // Abrimos el diálogo
-            this._pAyudaDialog.open();
             
             const oTable = this.byId("idTable");
             const oBinding = oTable.getBinding("items");
@@ -54,6 +48,22 @@ sap.ui.define([
                 MessageToast.show("Limpiando filtros...");
             }
         }, 
+
+        // Lógica del fragmento 
+        ayudaRequerida: async function (oEvent) {
+            //Guardamos el objeto Input que disparó el evento
+            this._oInputSource = oEvent.getSource(); 
+
+            // Cargamos el fragmento solo si no existe ya en memoria
+            if (!this._pAyudaDialog) {
+                this._pAyudaDialog = await this.loadFragment({
+                    name: "retosproyecto.fragment.DialogHelp"   
+                });
+                this.getView().addDependent(this._pAyudaDialog);
+            }    
+            // Abrimos el diálogo
+            this._pAyudaDialog.open();
+        },
         
         //Botón limpiar filtro clear
         limpiarFiltro: function (){
