@@ -1,40 +1,36 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
-    "sap/ui/model/json/JSONModel"
-], function (Controller, MessageToast,JSONModel) {
+    "sap/ui/model/json/JSONModel", 
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
+], function (Controller, MessageToast,JSONModel, Filter, FilterOperator) {
     "use strict";
 
     return Controller.extend("retosproyecto.controller.Home", {
         
         onInit: function () {
 
-            // CREAMOS DATOS DE PRUEBA PARA PODER UTILIZAR LA AYUDA DE DIALOGO
-            const oData = {
-                TipologiasSet: [
-                    { id: "01", nombre: "Individual" },
-                    { id: "02", nombre: "Múltiple" },
-                    { id: "03", nombre: "Urgente" }
-                ]
-            };
-            const oModel = new JSONModel(oData);
-            this.getView().setModel(oModel);
-            
         },
 
-        pulsarDesplegabable: function (oEvent) {
-            MessageToast.show("Abriendo variantes");
-        },
-
-        buscar: function () {
+        buscar: async function () {
+            //Declaración constantes
             const sSolicitud = this.byId("inSolicitud").getValue();
-            MessageToast.show("Buscando solicitud: " + sSolicitud);
-        },
+            const sTipologia = this.byId("inTipologia").getValue();
+            const sCategorizacion = this.byId("cbCategorizacion").getValue();
+            const aFilters = [];
 
-        // Lógica del fragmento 
-        ayudaRequerida: async function (oEvent) {
-            //Guardamos el objeto Input que disparó el evento
-            this._oInputSource = oEvent.getSource(); 
+            if (sSolicitud) {
+                // Creamos un filtro para el campo "id" de nuestro JSON (constructor Filter)
+                const oFilter = new Filter("id", FilterOperator.Contains, sSolicitud);
+                aFilters.push(oFilter);
+            } 
+            if (sTipologia){
+                aFilters.push(new Filter("tipologia", FilterOperator.Contains, sTipologia));
+
+            } if (sCategorizacion) {
+               aFilters.push(new Filter("categoria", FilterOperator.Contains, sCategorizacion)); 
+            }
 
             // Cargamos el fragmento solo si no existe ya en memoria
             if (!this._pAyudaDialog) {
@@ -45,26 +41,47 @@ sap.ui.define([
             }    
             // Abrimos el diálogo
             this._pAyudaDialog.open();
-        },
+            
+            const oTable = this.byId("idTable");
+            const oBinding = oTable.getBinding("items");
 
-        // Función necesaria para cuando el usuario selecciona algo en el diálogo
-        onValueHelpConfirm: function (oEvent) {
-            const selectItem = oEvent.getParameter("selectedItem");
-            if (selectItem) {
-                this._oInputSource.setValue(selectItem.getTitle());
+            oBinding.filter(aFilters); 
+
+            // Mensaje de feedback
+            if (sSolicitud) {
+                MessageToast.show("Buscando: " + sSolicitud);
+            } else {
+                MessageToast.show("Limpiando filtros...");
             }
         }, 
+        
+        //Botón limpiar filtro clear
+        limpiarFiltro: function (){
+            this.byId("inSolicitud").setValue("");
+            this.byId("inTipologia").setValue("");
 
-        onValueHelpSearch: function (oEvent) {
-            var sValue = oEvent.getParameter("value");
-            MessageToast.show("Filtrando por: " + sValue);
-            // Aquí iría la lógica de filtrado de la lista
+            this.buscar();
+
+            MessageToast.show("Filtros restablecidos");
+        }, 
+
+
+
+         // El formateador
+        formatState: function (sEstado) {
+            if (!sEstado) return "None";
+            
+            switch (sEstado) {
+                case "Aprobado": return "Success"; // Verde
+                case "Rechazado": return "Error";   // Rojo
+                case "Pendiente": return "Warning"; // Naranja
+                default: return "Information";      // Azul
+            }
         },
 
-        onValueHelpClose: function () {
-            
+        onItemPress: function (oEvent) {
+            MessageToast.show("Detalle de la solicitud seleccionado");
         }
-
 
     }); // Cierre del Controller.extend
 }); // Cierre del sap.ui.define

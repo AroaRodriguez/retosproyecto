@@ -1,12 +1,15 @@
 sap.ui.define([
-  "sap/ui/core/mvc/Controller"
-], (BaseController) => {
+  "sap/ui/core/mvc/Controller",
+  "sap/m/MessageToast"
+
+], (BaseController,MessageToast) => {
   "use strict";
 
   return BaseController.extend("retosproyecto.controller.App", {
       onInit() {
-      }
-
-      //Vacío aquí no se pone nada
+      },
+      pulsarDesplegabable: function (oEvent) {
+      MessageToast.show("Abriendo variantes");
+        }
   });
 });

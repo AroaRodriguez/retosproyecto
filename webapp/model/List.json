@@ -1,0 +1,25 @@
+{
+    "SolicitudesSet": [
+        {
+            "id": "1001",
+            "tipologia": "Individual",
+            "categoria": "Acción de Marketing",
+            "estado": "Aprobado",
+            "precio": 120.50
+        },
+        {
+            "id": "1002",
+            "tipologia": "Múltiple",
+            "categoria": "Muestras Comerciales",
+            "estado": "Pendiente",
+            "precio": 85.00
+        },
+        {
+            "id": "1003",
+            "tipologia": "Urgente",
+            "categoria": "Compras asociadas",
+            "estado": "Rechazado",
+            "precio": 550.00
+        }
+    ]
+}
