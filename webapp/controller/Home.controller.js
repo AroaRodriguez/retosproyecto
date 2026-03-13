@@ -10,11 +10,16 @@ sap.ui.define([
     return Controller.extend("retosproyecto.controller.Home", {
         
         onInit: function () {
-
-
-
-            
-
+                    // CREAMOS DATOS DE PRUEBA PARA PODER UTILIZAR LA AYUDA DE DIALOGO
+            const oData = {
+                TipologiasSet: [
+                    { id: "01", nombre: "Individual" },
+                    { id: "02", nombre: "Múltiple" },
+                    { id: "03", nombre: "Urgente" }
+                ]
+            };
+            const oModel = new JSONModel(oData);
+            this.getView().setModel(oModel);    
         },
 
         buscar: async function () {
