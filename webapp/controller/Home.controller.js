@@ -13,7 +13,7 @@ sap.ui.define([
 
         },
 
-        buscar: function () {
+        buscar: async function () {
             //Declaración constantes
             const sSolicitud = this.byId("inSolicitud").getValue();
             const sTipologia = this.byId("inTipologia").getValue();
@@ -32,7 +32,16 @@ sap.ui.define([
                aFilters.push(new Filter("categoria", FilterOperator.Contains, sCategorizacion)); 
             }
 
-
+            // Cargamos el fragmento solo si no existe ya en memoria
+            if (!this._pAyudaDialog) {
+                this._pAyudaDialog = await this.loadFragment({
+                    name: "retosproyecto.fragment.DialogHelp"   
+                });
+                this.getView().addDependent(this._pAyudaDialog);
+            }    
+            // Abrimos el diálogo
+            this._pAyudaDialog.open();
+            
             const oTable = this.byId("idTable");
             const oBinding = oTable.getBinding("items");
 
