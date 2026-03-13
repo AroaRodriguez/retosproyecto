@@ -45,7 +45,16 @@ sap.ui.define([
                 MessageToast.show("Limpiando filtros...");
             }
         }, 
+        
+        //Botón limpiar filtro clear
+        limpiarFiltro: function (){
+            this.byId("inSolicitud").setValue("");
+            this.byId("inTipologia").setValue("");
 
+            this.buscar();
+
+            MessageToast.show("Filtros restablecidos");
+        }, 
 
 
 
