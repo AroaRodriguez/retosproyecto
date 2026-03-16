@@ -45,7 +45,7 @@ sap.ui.define([
             } else {
                 MessageToast.show("Limpiando filtros...");
             }
-        }, 
+        },  //Modificar y añadir un nuevo modelo JSON
 
         // Lógica del fragmento 
         ayudaRequerida: async function (oEvent) {
