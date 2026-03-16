@@ -3,27 +3,5 @@
     displayBlock="true"
     xmlns="sap.m">
     <App id="app">
-        <Page id="paginaApp">
-            <customHeader>
-                <Bar id="bar">
-                    <contentLeft>
-                        <HBox id="cabecera" alignItems="Center">
-                            <Title id="standard" 
-                                text="{i18n>title}" 
-                                titleStyle="H4" 
-                                class="tituloStandard sapUiTinyMarginEnd" />
-                            <Button 
-                                id="btnDesglose"
-                                icon="sap-icon://slim-arrow-down" 
-                                type="Transparent"
-                                press=".pulsarDesplegableApp" />
-                        </HBox>
-                    </contentLeft>
-                </Bar>
-            </customHeader>
-            <content>
-                <mvc:XMLView id="vistaFiltros" viewName="retosproyecto.view.Home" />
-            </content>
-        </Page>
     </App>
 </mvc:View>

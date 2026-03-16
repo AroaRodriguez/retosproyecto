@@ -1,0 +1,40 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+    <Dialog id="newEntryDialog" title="Nueva Solicitud">
+        <content>
+            <f:SimpleForm id="formularioSimple" editable="true" layout="ResponsiveGridLayout">
+                <f:content>
+                    <Label id="newSolicitud" text="{i18n>solicitud}" required="true" />
+                    <Input id="newId" placeholder="Ej: 1005" />
+
+                    <Label id="newTipo" text="{i18n>tipologia}" />
+                    <Input id="newTipologia" />
+
+                    <Label id="newCat" text="{i18n>categoria}" />
+                    <ComboBox id="newCategoria" >
+                        <core:Item id="newaccion" key="Acción de Marketing" text="{i18n>accion}" />
+                        <core:Item id="newMuestras" key="Muestras Comerciales" text="{i18n>muestras}"/>
+                        <core:Item id="newCompras" key="Compras asociadas" text="{i18n>compras}" />
+                    </ComboBox>
+                    <Label id="newEst" text="{i18n>estado}" />
+                    <ComboBox id="newEstado">
+                        <core:Item id="newAprobado" key="Aprobado" text="{i18n>aprobado}" />
+                        <core:Item id="newPendiente" key="Pendiente" text="{i18n>pendiente}" />
+                        <core:Item id="newRechazado" key="Rechazado" text="{i18n>rechazado}" />
+                    </ComboBox>
+
+                    <Label id="newPre" text="{i18n>precio}" />
+                    <Input id="newPrecio" type="Number" description="EUR" />
+                </f:content>
+            </f:SimpleForm>
+        </content>
+        <beginButton>
+            <Button id="BtGuardar" text="Guardar" type="Accept" press=".GuardarNuevo" />
+        </beginButton>
+        <endButton>
+            <Button id="BtnCancelar" text="Cancelar" press=".CerrarDialogNuevo" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

@@ -5,6 +5,7 @@
     xmlns:core="sap.ui.core"
     xmlns:fb="sap.ui.comp.filterbar"
     displayBlock="true">
+    <!-- Filtros:-->
         <fb:FilterBar id="filterBar" header="{i18n>busqueda}" search=".buscar" showClearOnFB= "true"  clear=".limpiarFiltro"> <!--Definido botón GO, SAP lo hace, dispara la logica con el filterBar-->
                 <fb:filterGroupItems>
                     
@@ -32,7 +33,7 @@
 
                 </fb:filterGroupItems>
             </fb:FilterBar>
-            
+    <!-- Tabla:-->        
     <Table id="idTable"
         items="{listModel>/SolicitudesSet}"
         mode="MultiSelect"
@@ -46,7 +47,26 @@
             <OverflowToolbar id="toolbar">
                 <Title id="tituloLista" text="{i18n>listaSolicitudes}" titleStyle="H4" />
                 <ToolbarSpacer id="toolbarspacer" />
-                <!-- Crear botones crear, borrar, etc...-->
+                <!-- Crear botones crear, borrar-->
+                <!--Boton crear-->
+                <Button id="btnCreate"
+                        icon="sap-icon://add"
+                        text="{i18n>crear}"
+                        type="Emphasized" 
+                        press=".crear" />
+                <!--Boton eliminar-->
+                <Button id="btnDelete" 
+                         icon="sap-icon://delete" 
+                         text="{i18n>eliminar}" 
+                        type="Transparent" 
+                        press=".eliminar" />
+                <!--Boton editar-->       
+                <Button id="btneditar" 
+                         icon="sap-icon://edit" 
+                         text="{i18n>editar}" 
+                        type="Transparent" 
+                        press=".editar" />        
+
             </OverflowToolbar>
         </headerToolbar>
 
@@ -72,13 +92,13 @@
             <ColumnListItem id="listaColumna" vAlign="Middle" type="Navigation" press=".onItemPress">
                 <cells>
                     <Text id="id2" text="{listModel>id}" />
-                    <Text id="tipo2" text="{tipologia}" />
-                    <Text id="categoria2" text="{categoria}" />
+                    <Text id="tipo2" text="{listModel>tipologia}" />
+                    <Text id="categoria2" text="{listModel>categoria}" />
                     <ObjectStatus id="objectEstado"
-                        text="{estado}"
-                        state="{path: 'estado', formatter: '.formatState'}" />
+                        text="{listModel>estado}"
+                        state="{path: 'listModel>estado', formatter: '.formatState'}" /> <!--Creada función lógica del estado-->
                     <ObjectNumber id="objectNumero"
-                        number="{precio}"
+                        number="{listModel>precio}"
                         unit="EUR"
                         state="Information" />    
                 </cells>
