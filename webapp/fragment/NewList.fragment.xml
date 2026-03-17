@@ -2,39 +2,39 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:f="sap.ui.layout.form">
-    <Dialog id="newEntryDialog" title="Nueva Solicitud">
+    <Dialog id="newEntryDialog" title="{i18n>newRequest}">
         <content>
             <f:SimpleForm id="formularioSimple" editable="true" layout="ResponsiveGridLayout">
                 <f:content>
-                    <Label id="newSolicitud" text="{i18n>solicitud}" required="true" />
+                    <Label id="newRequest" text="{i18n>request}" required="true" />
                     <Input id="newId" placeholder="Ej: 1005" />
 
-                    <Label id="newTipo" text="{i18n>tipologia}" />
-                    <Input id="newTipologia" />
+                    <Label id="newType" text="{i18n>typology}" />
+                    <Input id="newTypology" />
 
-                    <Label id="newCat" text="{i18n>categoria}" />
-                    <ComboBox id="newCategoria" >
-                        <core:Item id="newaccion" key="Acción de Marketing" text="{i18n>accion}" />
-                        <core:Item id="newMuestras" key="Muestras Comerciales" text="{i18n>muestras}"/>
-                        <core:Item id="newCompras" key="Compras asociadas" text="{i18n>compras}" />
+                    <Label id="newCat" text="{i18n>category}" />
+                    <ComboBox id="newCategory" >
+                        <core:Item id="newaction" key="Acción de Marketing" text="{i18n>accion}" />
+                        <core:Item id="newSamples" key="Muestras Comerciales" text="{i18n>muestras}"/>
+                        <core:Item id="newBuys" key="Compras asociadas" text="{i18n>compras}" />
                     </ComboBox>
-                    <Label id="newEst" text="{i18n>estado}" />
-                    <ComboBox id="newEstado">
-                        <core:Item id="newAprobado" key="Aprobado" text="{i18n>aprobado}" />
-                        <core:Item id="newPendiente" key="Pendiente" text="{i18n>pendiente}" />
-                        <core:Item id="newRechazado" key="Rechazado" text="{i18n>rechazado}" />
+                    <Label id="newSt" text="{i18n>status}" /> 
+                    <ComboBox id="newStatus">
+                        <core:Item id="newApproved" key="Aprobado" text="{i18n>approved}" />
+                        <core:Item id="newPending" key="Pendiente" text="{i18n>pending}" />
+                        <core:Item id="newReject" key="Rechazado" text="{i18n>reject}" />
                     </ComboBox>
 
-                    <Label id="newPre" text="{i18n>precio}" />
-                    <Input id="newPrecio" type="Number" description="EUR" />
+                    <Label id="newPre" text="{i18n>price}" />
+                    <Input id="newPrice" type="Number" description="EUR" />
                 </f:content>
             </f:SimpleForm>
         </content>
         <beginButton>
-            <Button id="BtGuardar" text="Guardar" type="Accept" press=".GuardarNuevo" />
+            <Button id="BtnSave" text="{i18n>save}" type="Accept" press=".newSave" />
         </beginButton>
         <endButton>
-            <Button id="BtnCancelar" text="Cancelar" press=".CerrarDialogNuevo" />
+            <Button id="BtnCancel" text="{i18n>cancel}" press=".newDialogClose" />
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

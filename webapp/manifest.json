@@ -58,7 +58,7 @@
       }, 
       "filtradoModel": {
         "type": "sap.ui.model.json.JSONModel", 
-        "uri": "model/Filtrado.json"
+        "settings": {}
       }
     },
     "resources": {

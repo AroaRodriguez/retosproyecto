@@ -5,23 +5,23 @@
     xmlns:core="sap.ui.core"
     xmlns:fb="sap.ui.comp.filterbar"
     displayBlock="true">
-    <!-- Filtros:-->
-        <fb:FilterBar id="filterBar" header="{i18n>busqueda}" search=".buscar" showClearOnFB= "true"  clear=".limpiarFiltro"> <!--Definido botón GO, SAP lo hace, dispara la logica con el filterBar-->
+    <!-- Filter:-->
+        <fb:FilterBar id="filterBar" header="{i18n>busqueda}" search=".searchMethod" showClearOnFB= "true"  clear=".cleanFilter"> <!--Definido botón GO, SAP lo hace, dispara la logica con el filterBar-->
                 <fb:filterGroupItems>
                     
-                    <fb:FilterGroupItem id="filtrarSolicitud" name="Solicitud" label="{i18n>solicitud}" groupName="G1" visibleInFilterBar="true"> <!--visibilidad de la barra visibleInFilterBar-->
+                    <fb:FilterGroupItem id="RequestFilter" name="Request" label="{i18n>request}" groupName="G1" visibleInFilterBar="true"> <!--visibilidad de la barra visibleInFilterBar-->
                         <fb:control>
-                            <Input id="inSolicitud" placeholder="número" /> <!--placeholder = igual a Android hinit-->
+                            <Input id="inRequest" placeholder="número" /> <!--placeholder = same to Android hinit-->
                         </fb:control>
                     </fb:FilterGroupItem>
 
-                    <fb:FilterGroupItem id="filtrarTipologia" name="Tipologia" label="{i18n>tipologia}" groupName="G1" visibleInFilterBar="true">
+                    <fb:FilterGroupItem id="TipologyFilter" name="Tipology" label="{i18n>typology}" groupName="G1" visibleInFilterBar="true">
                         <fb:control>
-                             <Input id="inTipologia" showValueHelp="true" valueHelpRequest=".ayudaRequerida" placeholder="tipo"  /> 
+                             <Input id="inTypology" showValueHelp="true" valueHelpRequest=".HelpRequest" placeholder="tipo"  /> 
                         </fb:control>
                     </fb:FilterGroupItem>
-
-                    <fb:FilterGroupItem id="filtrarCategorizacion" name="Categorizacion" label="{i18n>categoria}" groupName="G1" visibleInFilterBar="true">
+<!--Falta ingles-->
+                    <fb:FilterGroupItem id="CategoryFilter" name="Category" label="{i18n>category}" groupName="G1" visibleInFilterBar="true">
                         <fb:control>
                             <ComboBox id="cbCategorizacion" items="{filtradoModel>/CategoriasSet}"> <!-- Combo box de categorización-->
                                 <core:Item id="categoryFilter" key="{filtradoModel>categoria}" text="{filtradoModel>categoria}"/>
@@ -31,7 +31,7 @@
 
                 </fb:filterGroupItems>
             </fb:FilterBar>
-    <!-- Tabla:-->        
+    <!-- Table:-->        
     <Table id="idTable"
         items="{listModel>/SolicitudesSet}"
         mode="MultiSelect"
@@ -43,51 +43,50 @@
         
         <headerToolbar>
             <OverflowToolbar id="toolbar">
-                <Title id="tituloLista" text="{i18n>listaSolicitudes}" titleStyle="H4" />
+                <Title id="titleList" text="{i18n>requestList}" titleStyle="H4" />
                 <ToolbarSpacer id="toolbarspacer" />
-                <!-- Crear botones crear, borrar-->
-                <!--Boton crear-->
+                <!-- Button CRUD-->
+                <!--Button create-->
                 <Button id="btnCreate"
                         icon="sap-icon://add"
-                        text="{i18n>crear}"
+                        text="{i18n>createName}"
                         type="Emphasized" 
-                        press=".crear" />
-                <!--Boton eliminar-->
+                        press=".create" />
+                <!--Button delete-->
                 <Button id="btnDelete" 
                          icon="sap-icon://delete" 
-                         text="{i18n>eliminar}" 
+                         text="{i18n>deleteName}" 
                         type="Transparent" 
-                        press=".eliminar" />
-                <!--Boton editar-->       
+                        press=".delete" />
+                <!--Button edit-->       
                 <Button id="btneditar" 
                          icon="sap-icon://edit" 
-                         text="{i18n>editar}" 
+                         text="{i18n>editName}" 
                         type="Transparent" 
-                        press=".editar" />        
+                        press=".edit" />        
 
             </OverflowToolbar>
         </headerToolbar>
-
         <columns>
-            <Column id="columnaNum" width="8rem">
-                <Text id="txtColSol" text="{i18n>solicitud}" />
+            <Column id="columnNum" width="8rem">
+                <Text id="txtColSol" text="{i18n>request}" />
             </Column>
-            <Column id="columnaTipo" minScreenWidth="Tablet" demandPopin="true">
-                <Text id="txtColTipo" text="{i18n>tipologia}" /> <!-- preguntar si se pueden aprovechar los titulos.-->
+            <Column id="columnType" minScreenWidth="Tablet" demandPopin="true">
+                <Text id="txtColTipo" text="{i18n>typology}" /> 
             </Column>
-            <Column id="columnaCateg" minScreenWidth="Tablet" demandPopin="true">
-                <Text id="txtColCateg" text="{i18n>categoria}" />
+            <Column id="columnCateg" minScreenWidth="Tablet" demandPopin="true">
+                <Text id="txtColCateg" text="{i18n>category}" />
             </Column>
-            <Column id="estado" hAlign="Center">
-                <Text id="txtColestado" text="{i18n>estado}" />
+            <Column id="columnStatus" hAlign="Center">
+                <Text id="txtColestado" text="{i18n>status}" />
             </Column>
-            <Column id="precio" hAlign="Center">
-                <Text id="txtColprecio" text="{i18n>precio}" />
+            <Column id="columnPrice" hAlign="Center">
+                <Text id="txtColprecio" text="{i18n>price}" />
             </Column>
         </columns>
-
+        <!--Get items model-->
         <items>
-            <ColumnListItem id="listaColumna" vAlign="Middle" type="Navigation" press=".onItemPress">
+            <ColumnListItem id="columnList" vAlign="Middle" type="Navigation" press=".onItemPress">
                 <cells>
                     <Text id="id2" text="{listModel>id}" />
                     <Text id="tipo2" text="{listModel>tipologia}" />

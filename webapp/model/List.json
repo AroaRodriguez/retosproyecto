@@ -20,6 +20,13 @@
             "categoria": "Compras asociadas",
             "estado": "Rechazado",
             "precio": 550.00
+        }, 
+         {
+            "id": "1003",
+            "tipologia": "Urgente",
+            "categoria": "Multiples muestras",
+            "estado": "Rechazado",
+            "precio": 550.00
         }
     ],
     "TipologiasSet" : [
