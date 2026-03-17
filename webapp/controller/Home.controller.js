@@ -14,12 +14,38 @@ sap.ui.define([
         
         onInit: function () {  
         },
+
+        //Función para generar categorias del modelo 
+        generarCategorias: function (oListModel) {
+            //Obtenemos el array con todas las solicitudes de List.json
+            const aSolictiudes = oListModel.getProperty("/SolicitudesSet");
+            if(!aSolictiudes)return;
+            
+            //Mapeamos para sacar solo los nombres de categoría y usamos Set para limpiar duplicados
+            const aCategoriasUnicas = [...new Set (aSolictiudes.map (sol=>sol.categoria))];
+
+            //Formateamos el array para que lo entienda el comboBox
+            const aDatosComboBox = aCategoriasUnicas.map (cat => {
+                return {categoria: cat}; //array
+
+            })
+
+            const oFiltradoModel = new JSONModel ({
+                CategoriasSet: aDatosComboBox  
+            });
+
+            this.getView().setModel(oFiltradoModel,"filtrado");
+            
+        },
+
+
+
         //Función filtros 
         buscar: async function () {
             //Declaración constantes
             const sSolicitud = this.byId("inSolicitud").getValue();
             const sTipologia = this.byId("inTipologia").getValue();
-            const sCategorizacion = this.byId("cbCategorizacion").getValue();
+            const sCategorizacion = this.byId("cbCategorizacion").getSelectedKey();
             const aFilters = [];
 
             if (sSolicitud) {
@@ -31,12 +57,11 @@ sap.ui.define([
                 aFilters.push(new Filter("tipologia", FilterOperator.Contains, sTipologia));
 
             } if (sCategorizacion) {
-               aFilters.push(new Filter("categoria", FilterOperator.Contains, sCategorizacion)); 
+               aFilters.push(new Filter("categoria", FilterOperator.EQ, sCategorizacion)); 
             }
             
             const oTable = this.byId("idTable");
             const oBinding = oTable.getBinding("items");
-
             oBinding.filter(aFilters); 
 
             // Mensaje de feedback

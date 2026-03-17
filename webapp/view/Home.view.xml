@@ -23,10 +23,8 @@
 
                     <fb:FilterGroupItem id="filtrarCategorizacion" name="Categorizacion" label="{i18n>categoria}" groupName="G1" visibleInFilterBar="true">
                         <fb:control>
-                            <ComboBox id="cbCategorizacion"> <!-- Combo box de categorización-->
-                                <core:Item id="accion" key="MKT" text="{i18n>accion}" />
-                                <core:Item id="muestras" key="MUS" text="{i18n>muestras}" />
-                                <core:Item id="compras" key="MUS" text="{i18n>compras}" />
+                            <ComboBox id="cbCategorizacion" items="{filtradoModel>/CategoriasSet}"> <!-- Combo box de categorización-->
+                                <core:Item id="categoryFilter" key="{filtradoModel>categoria}" text="{filtradoModel>categoria}"/>
                             </ComboBox>
                         </fb:control>
                     </fb:FilterGroupItem>
