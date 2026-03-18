@@ -22,12 +22,34 @@
             "precio": 550.00
         }, 
          {
-            "id": "1003",
+            "id": "1004",
             "tipologia": "Urgente",
             "categoria": "Multiples muestras",
             "estado": "Rechazado",
             "precio": 550.00
+        }, 
+                 {
+            "id": "1005",
+            "tipologia": "Urgente",
+            "categoria": "Multiples muestras",
+            "estado": "Rechazado",
+            "precio": 550.00
+        }, 
+                         {
+            "id": "1006",
+            "tipologia": "Urgente",
+            "categoria": "Compras asociadas",
+            "estado": "Rechazado",
+            "precio": 550.00
+        },
+                                 {
+            "id": "1007",
+            "tipologia": "Urgente",
+            "categoria": "Pruebas urgentes",
+            "estado": "Rechazado",
+            "precio": 550.00
         }
+        
     ],
     "TipologiasSet" : [
         { "id": "01",

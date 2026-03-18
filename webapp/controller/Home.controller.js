@@ -14,17 +14,45 @@ sap.ui.define([
 
     return Controller.extend("retosproyecto.controller.Home", {
 
-        onInit: function () {
+        onInit: function () {  
 
+            //Indicamos la ruta y funcion loadDynamicCategory
+            const oRoute = this.getOwnerComponent().getRouter();
+            oRoute.getRoute("RouteHome").attachPatternMatched(this.loadDynamicCategory, this);
+            
         },
+
+        //Function new modelJSON to add category values from List.Json
+         loadDynamicCategory: function () {
+            //Recuperamos el modelo listModel
+            const oListModel = this.getOwnerComponent().getModel("listModel");
+            const aData = oListModel.getProperty("/SolicitudesSet");
+
+            if (aData && aData.length > 0) {
+                //Extraer y limpiar duplicados con Set
+                const aUniqueCategory = [...new Set(aData.map(item => item.categoria))];
+                
+                //Mapear a formato Objeto para el ComboBox
+                const aFilterData = aUniqueCategory.map(cat => ({ 
+                    categoria: cat 
+                }));
+                //Recuperamos el modelo filtrado
+                const oFilterModel = this.getOwnerComponent().getModel("filtradoModel");
+                // Añadimos los datos al modelo.
+                if (oFilterModel) {
+                    oFilterModel.setProperty("/CategoriasSet", aFilterData);
+                }  
+            }
+        },
+
 
         //Function search filter
         searchMethod: async function () {
             //Type constant and to declare
-            const sRequest = this.byId("inSolicitud").getValue();
-            const sTypology = this.byId("inTipologia").getValue();
-            const sCategory = this.byId("cbCategorizacion").getSelectedKey();
             const aFilters = [];
+            const sRequest = this.byId("inRequest").getValue();
+            const sTypology = this.byId("inTypology").getValue();
+            const sCategory = this.byId("cbCategorizacion").getSelectedKey();
 
             if (sRequest) {
                 // Create a filter for type ID our JSON file (used constructor filter)
@@ -50,6 +78,8 @@ sap.ui.define([
             }
         },
 
+        
+
 
         // Function fragment
         HelpRequest: async function (oEvent) {
@@ -71,15 +101,17 @@ sap.ui.define([
 
         //Logic Button to clear filter
         cleanFilter: function () {
-            this.byId("inSolicitud").setValue("");
-            this.byId("inTipologia").setValue("");
+            this.byId("inRequest").setValue("");
+            this.byId("inTypology").setValue("");
+            this.byId("cbCategorizacion").setSelectedKey("");
 
-            this.buscar();
 
-            MessageToast.show("{i18n>msgFilter}");
+            this.searchMethod();
+
+            MessageToast.show("Limpiando filtro");
         },
 
-
+    
 
         // Añadir los colores según tipologia
         formatState: function (sEstado) {
