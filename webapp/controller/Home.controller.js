@@ -18,7 +18,7 @@ sap.ui.define([
 
             //Indicamos la ruta y funcion loadDynamicCategory
             const oRoute = this.getOwnerComponent().getRouter();
-            oRoute.getRoute("RouteHome").attachPatternMatched(this.loadDynamicCategory, this);
+            oRoute.getRoute("RouteHome").attachPatternMatched(this.loadDynamicCategory, this); //Busca la ruta en el manifest y dispara el evento --> cuando salte el evento que ejecute la función
             
         },
 
