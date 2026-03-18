@@ -28,9 +28,9 @@ sap.ui.define([
             const oListModel = this.getOwnerComponent().getModel("listModel");
             const aData = oListModel.getProperty("/SolicitudesSet");
 
-            if (aData && aData.length > 0) {
+            if (aData.length > 0) {
                 //Extraer y limpiar duplicados con Set
-                const aUniqueCategory = [...new Set(aData.map(item => item.categoria))];
+                const aUniqueCategory = [...new Set(aData.map(item => item.categoria))]; //Spread (concatenar arrays)+ funcion mapeo
                 
                 //Mapear a formato Objeto para el ComboBox
                 const aFilterData = aUniqueCategory.map(cat => ({ 
