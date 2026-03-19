@@ -1,0 +1,16 @@
+<mvc:View
+    controllerName="retosproyecto.controller.Detail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+    
+    <Page id="pageDetail"
+          title="{i18n>detailTitle}" 
+          showNavButton="true"
+          navButtonPress=".onNavBack">
+          
+        <content>
+        <Text id="textTest" text="¡Navegación existosa! Aquí irán los detalles luego." class="sapUiMargin"></Text>
+        </content>
+    </Page>
+</mvc:View>

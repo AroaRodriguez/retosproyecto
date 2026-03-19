@@ -55,9 +55,9 @@
       "listModel": {
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/List.json"
-      }, 
+      },
       "filtradoModel": {
-        "type": "sap.ui.model.json.JSONModel", 
+        "type": "sap.ui.model.json.JSONModel",
         "settings": {}
       }
     },
@@ -87,12 +87,23 @@
           "target": [
             "TargetHome"
           ]
+        },
+        {
+          "name": "RouteDetail",
+          "pattern": "Detail/{requestId}",
+          "target": [
+            "TargetDetail"
+          ]
         }
       ],
       "targets": {
         "TargetHome": {
           "id": "Home",
           "name": "Home"
+        },
+        "TargetDetail": {
+          "id": "Detail",
+          "name": "Detail"
         }
       }
     },

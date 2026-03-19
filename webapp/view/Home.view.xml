@@ -17,7 +17,7 @@
 
                     <fb:FilterGroupItem id="TipologyFilter" name="Tipology" label="{i18n>typology}" groupName="G1" visibleInFilterBar="true">
                         <fb:control>
-                             <Input id="inTypology" showValueHelp="true" valueHelpRequest=".HelpRequest" placeholder="tipo"  /> 
+                             <Input id="inTypology" showValueHelp="true" valueHelpRequest=".helpRequest" placeholder="tipo"  /> 
                         </fb:control>
                     </fb:FilterGroupItem>
 <!--Falta ingles-->
