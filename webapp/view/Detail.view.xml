@@ -2,15 +2,37 @@
     controllerName="retosproyecto.controller.Detail"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
     displayBlock="true">
     
     <Page id="pageDetail"
           title="{i18n>detailTitle}" 
           showNavButton="true"
-          navButtonPress=".onNavBack">
-          
+          navButtonPress=".onNavBack"> <!--Function button go back-->
         <content>
-        <Text id="textTest" text="¡Navegación existosa! Aquí irán los detalles luego." class="sapUiMargin"></Text>
+        <f:SimpleForm id="formDetail" editable="true" layout="ResponsiveGridLayout" title="{i18n>requestDetail}">
+                <f:content>
+                    <!--Information of request:-->
+                    <Label id="requestLbl" text="{i18n>request}" />
+                    <Input id="inDetailId" value="{listModel>id}" editable="false" /> 
+
+                    <!--Information of typology:-->
+                    <Label id="typologyLbl" text="{i18n>typology}" />
+                    <Input id="inDetailTypology" value="{listModel>tipologia}" />
+
+                    <!--Information of category:-->
+                    <Label id="categoryLbl" text="{i18n>category}" />
+                    <Input id="inDetailCategory" value="{listModel>categoria}" />
+
+                    <!--Information of status:-->
+                    <Label id="statusLbl" text="{i18n>status}" />
+                    <Input id="inDetailStatus" value="{listModel>estado}" />
+                    
+                    <!--Information of price:-->
+                    <Label id="priceLbl" text="{i18n>price}" />
+                    <Input id="inDetailPrice" value="{listModel>precio}" type="Number" />
+                </f:content>
+            </f:SimpleForm>
         </content>
     </Page>
 </mvc:View>
