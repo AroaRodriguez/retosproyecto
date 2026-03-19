@@ -1,25 +1,18 @@
 sap.ui.define([
-    "sap/ui/core/UIComponent",
-    "retosproyecto/model/models"
-], (UIComponent, models) => {
+    "sap/ui/core/UIComponent"
+], function (UIComponent) {
     "use strict";
 
     return UIComponent.extend("retosproyecto.Component", {
         metadata: {
-            manifest: "json",
-            interfaces: [
-                "sap.ui.core.IAsyncContentCreation"
-            ]
+            manifest: "json"
         },
 
-        init() {
-            // call the base component's init function
+        init: function () {
+
             UIComponent.prototype.init.apply(this, arguments);
 
-            // set the device model
-            this.setModel(models.createDeviceModel(), "device");
 
-            // enable routing
             this.getRouter().initialize();
         }
     });

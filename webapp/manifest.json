@@ -55,6 +55,10 @@
       "listModel": {
         "type": "sap.ui.model.json.JSONModel",
         "uri": "model/List.json"
+      }, 
+      "filtradoModel": {
+        "type": "sap.ui.model.json.JSONModel", 
+        "settings": {}
       }
     },
     "resources": {
