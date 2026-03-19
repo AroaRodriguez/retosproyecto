@@ -14,16 +14,19 @@ sap.ui.define([
 
     return Controller.extend("retosproyecto.controller.Home", {
 
-        onInit: function () {  
+        onInit: function () {
 
             //Indicamos la ruta y funcion loadDynamicCategory
             const oRoute = this.getOwnerComponent().getRouter();
             oRoute.getRoute("RouteHome").attachPatternMatched(this.loadDynamicCategory, this); //Busca la ruta en el manifest y dispara el evento --> cuando salte el evento que ejecute la función
-            
+        },
+
+        onAfterRendering: function () {
+            this.loadDynamicCategory();
         },
 
         //Function new modelJSON to add category values from List.Json
-         loadDynamicCategory: function () {
+        loadDynamicCategory: function () {
             //Recuperamos el modelo listModel
             const oListModel = this.getOwnerComponent().getModel("listModel");
             const aData = oListModel.getProperty("/SolicitudesSet");
@@ -31,17 +34,17 @@ sap.ui.define([
             if (aData.length > 0) {
                 //Extraer y limpiar duplicados con Set
                 const aUniqueCategory = [...new Set(aData.map(item => item.categoria))]; //Spread (concatenar arrays)+ funcion mapeo
-                
+
                 //Mapear a formato Objeto para el ComboBox
-                const aFilterData = aUniqueCategory.map(cat => ({ 
-                    categoria: cat 
+                const aFilterData = aUniqueCategory.map(cat => ({
+                    categoria: cat
                 }));
                 //Recuperamos el modelo filtrado
                 const oFilterModel = this.getOwnerComponent().getModel("filtradoModel");
                 // Añadimos los datos al modelo.
                 if (oFilterModel) {
                     oFilterModel.setProperty("/CategoriasSet", aFilterData);
-                }  
+                }
             }
         },
 
@@ -78,7 +81,7 @@ sap.ui.define([
             }
         },
 
-        
+
 
 
         // Function fragment
@@ -111,7 +114,7 @@ sap.ui.define([
             MessageToast.show("Limpiando filtro");
         },
 
-    
+
 
         // Añadir los colores según tipologia
         formatState: function (sEstado) {
