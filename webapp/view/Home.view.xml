@@ -57,13 +57,6 @@
                          text="{i18n>deleteName}" 
                         type="Transparent" 
                         press=".delete" />
-                <!--Button edit-->       
-                <Button id="btneditar" 
-                         icon="sap-icon://edit" 
-                         text="{i18n>editName}" 
-                        type="Transparent" 
-                        press=".edit" />        
-
             </OverflowToolbar>
         </headerToolbar>
         <columns>

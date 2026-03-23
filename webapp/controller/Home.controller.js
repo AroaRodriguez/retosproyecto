@@ -82,8 +82,6 @@ sap.ui.define([
         },
 
 
-
-
         // Function fragment
         helpRequest: async function (oEvent) {
             //Save an object Input that trigger event 
@@ -137,6 +135,88 @@ sap.ui.define([
                 requestId: sIdRequest
             });
         },
+
+        //---------------------------------------------------------VALID FORMULARY--------------------------------------------------------
+        validationFormulary: function (oEvent) {
+            let bIsValid = true;
+            const oModel = this.getView().getModel("listModel");
+            const aData = oModel ? oModel.getProperty("/SolicitudesSet") || [] : [];
+
+            const aRules = [
+                {
+                    id: "newId",
+                    check: (val) => {
+                        if (!val || val.length !== 4) return false;
+                        const bExists = aData.some(item => item.id === val); //If id exists, couldn't create
+                        return !bExists;
+                    },
+                    msg: "El ID es obligatorio y único, debe tener al menos 4 caracteres"
+                },
+                {
+                    id: "newPrice",
+                    check: (val) => val && parseFloat(val) > 0,
+                    msg: "El precio es obligatorio y debe ser mayor a 0"
+                },
+                {
+                    id: "newTypology",
+                    check: (val) => !val || val.length >= 4,
+                    msg: "Si indicas tipología, debe tener al menos 4 caracteres"
+                }
+            ];
+
+            let aFieldsToValidate = aRules;
+
+            if (oEvent && oEvent.getSource) {
+                const sControlId = oEvent.getSource().getId();
+                aFieldsToValidate = aRules.filter(rule => sControlId.includes(rule.id));
+            }
+
+            aFieldsToValidate.forEach(rule => {
+                const oControl = this.byId(rule.id);
+
+                if (oControl) {
+                    const sValue = oControl.getValue ? oControl.getValue().trim() : "";
+                    if (!rule.check(sValue)) {
+                        oControl.setValueState("Error");
+                        oControl.setValueStateText(rule.msg);
+                        bIsValid = false;
+                    } else {
+                        oControl.setValueState("Success");
+                    }
+                }
+            });
+            return bIsValid;
+        },
+
+        //Function cleanFormulary
+        cleanFormulary: function () {
+            const aFieldsIds = ["newId", "newTypology", "newPrice"];
+
+            aFieldsIds.forEach(id => {
+                const oControl = this.byId(id);
+
+                if (oControl) {
+                    oControl.setValue("");
+                    oControl.setValueState("None");
+                }
+
+            });
+
+            const oCat = this.byId("newCategory");
+            if (oCat) {
+                oCat.setSelectedKey("");
+                oCat.setValueState("None");
+            }
+
+            const oStat = this.byId("newStatus");
+
+            if (oStat) {
+                oStat.setSelectedKey("");
+                oStat.setValueState("None");
+            }
+
+        },
+
 
         //---------------------------------------------------CRUD METHOD---------------------------------------------------------------------
 
@@ -196,7 +276,11 @@ sap.ui.define([
         },
         //Function close dialog if you not put information
         newDialogClose: function () {
-            this._oDialog.close();
+            this.cleanFormulary();
+            if (this._oDialog){
+                this._oDialog.close();
+            }
+        
         },
 
         //Function CRUD Save dialog
@@ -204,13 +288,18 @@ sap.ui.define([
             const oModel = this.getView().getModel("listModel");
             const oContext = this._oDialog.getBindingContext("listModel");
 
+            if (!this.validationFormulary()) {
+                MessageToast.show("Revisa los campos marcados en rojo antes de guardar");
+                return;
+            }
+
             if (!oContext) {
                 const aData = oModel.getProperty("/SolicitudesSet");
                 const oNewRequest = {
                     id: this.byId("newId").getValue(),
-                    tipologia: this.byId("newTypology").getValue(),
-                    categoria: this.byId("newCategory").getValue(),
-                    estado: this.byId("newStatus").getValue(),
+                    tipologia: this.byId("newTypology").getValue().trim(),
+                    categoria: this.byId("newCategory").getSelectedKey(),
+                    estado: this.byId("newStatus").getSelectedKey(),
                     precio: parseFloat(this.byId("newPrice").getValue()) || 0
                 };
 
@@ -223,51 +312,12 @@ sap.ui.define([
                 aData.push(oNewRequest);
                 oModel.setProperty("/SolicitudesSet", aData);
                 MessageToast.show("Solicitud " + oNewRequest.id + " creada con éxito");
-
-                MessageToast("Solicitud" + oNewRequest + "creada correctamente");
             } else {
                 MessageToast.show("Solicitud " + oContext.getProperty("id") + " actualizada");
             }
 
             //Call the function close dialog
             this.newDialogClose();
-        },
-
-
-        //Function CRUD edit
-        edit: function () {
-
-            const oTable = this.byId("idTable");
-            const aSelectedItems = oTable.getSelectedItems();
-
-            //If you select more than one row (that is, the selected is different from 1)
-            if (aSelectedItems.length !== 1) {
-
-                MessageToast.show("Por favor, selecciona exactamente una fila para editar");
-                return;
-            }
-
-            const oSelectedItem = aSelectedItems[0];
-            const oContext = oSelectedItem.getBindingContext("listModel");
-            const oView = this.getView();
-
-            if (!this._oDialog) {
-                Fragment.load({
-                    id: oView.getId(),
-                    name: "retosoproyecto.fragment.NewList",
-                    controller: this
-                }).then(function (oDialog) {
-                    this._oDialog = oDialog;
-                    oView.addDependent(this._oDialog);
-                    //Warning!! Linking the dialog with the selected view
-                    this._oDialog.setBindingContext(oContext, "listModel");
-                    this._oDialog.open();
-                }.bind(this));
-
-            } else {
-                this._oDialog.setBindingContext(oContext, "listModel");
-                this._oDialog.open();
-            }
         }
     }); // close Controller.extend
 }); // close sap.ui.define

@@ -6,14 +6,14 @@
         <content>
             <f:SimpleForm id="formularioSimple" editable="true" layout="ResponsiveGridLayout">
                 <f:content>
-                    <Label id="newRequest" text="{i18n>request}" required="true" />
-                    <Input id="newId" placeholder="Ej: 1005" />
+                    <Label id="newRequest" text="{i18n>request}" required="true" /> <!--Obligatory input-->
+                    <Input id="newId" placeholder="Ej: 1005" required="true" liveChange=".validationFormulary" />
 
                     <Label id="newType" text="{i18n>typology}" />
-                    <Input id="newTypology" />
+                    <Input id="newTypology" liveChange=".validationFormulary" />
 
                     <Label id="newCat" text="{i18n>category}" />
-                    <ComboBox id="newCategory" >
+                    <ComboBox id="newCategory">
                         <core:Item id="newaction" key="Acción de Marketing" text="{i18n>accion}" />
                         <core:Item id="newSamples" key="Muestras Comerciales" text="{i18n>muestras}"/>
                         <core:Item id="newBuys" key="Compras asociadas" text="{i18n>compras}" />
@@ -25,8 +25,8 @@
                         <core:Item id="newReject" key="Rechazado" text="{i18n>reject}" />
                     </ComboBox>
 
-                    <Label id="newPre" text="{i18n>price}" />
-                    <Input id="newPrice" type="Number" description="EUR" />
+                    <Label id="newPre" text="{i18n>price}" required="true" /> <!--Obligatory input-->
+                    <Input id="newPrice" type="Number" description="EUR" required="true" liveChange=".validationFormulary" />
                 </f:content>
             </f:SimpleForm>
         </content>
