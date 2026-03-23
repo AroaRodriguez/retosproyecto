@@ -1,29 +1,34 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/core/routing/History" // Librería obligatoria para el botón "Atrás"
-], function (Controller, History) {
+    "sap/ui/core/routing/History", 
+    "sap/m/MessageToast"
+], function (Controller, History, MessageToast) {
     "use strict";
 
     return Controller.extend("retosproyecto.controller.Detail", {
 
         onInit: function () {
+            //Route
             const oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("RouteDetail").attachPatternMatched(this.loadInformation, this);
         },
 
+        //Function loadInformation
 
         loadInformation: function (oEvent) {
+            //Extract route arguments and retrieve the JSON model Data. 
             const oArguments = oEvent.getParameter("arguments");
             const sRequestId = oArguments.requestId;
             const oModel = this.getOwnerComponent().getModel("listModel");
             const aData = oModel.getProperty("/SolicitudesSet");
 
-
+            //Check if the data array is populated
             if (aData.length > 0) {
+                //Find the extract index of the requested item within the array
                 const iIndex = aData.findIndex(item => item.id === sRequestId);
-
+                //If the item exists (findIndex doesn't return -1)
                 if (iIndex !== -1) {
-
+                    //Construct the binding path and bind the view to this specific context
                     const sPath = "/SolicitudesSet/" + iIndex;
                     this.getView().bindElement({
                         path: sPath,
@@ -31,10 +36,11 @@ sap.ui.define([
                     });
 
                 } else {
+                    //Log and error if the specific ID is not found in the array
                     console.error("No se encontró la solicitud con ID:", sRequestId);
                 }
             } else {
-
+                MessageToast.show("No se ha encontrado ningun valor JSOn");
             }
         },
 
