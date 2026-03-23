@@ -85,9 +85,10 @@
                     <Text id="categoria2" text="{listModel>categoria}" />
                     <ObjectStatus id="objectEstado"
                         text="{listModel>estado}"
-                        state="{path: 'listModel>estado', formatter: '.formatState'}" /> <!--Create function of stattus-->
+                        state="{path: 'listModel>estado', formatter: '.formatter.formatState'}" /> <!--Create function of stattus-->
+
                     <ObjectNumber id="objectNumero"
-                        number="{listModel>precio}"
+                        number="{path: 'listModel>precio', formatter: '.formatter.formatPrice'}"
                         unit="EUR"
                         state="Information" />    
                 </cells>

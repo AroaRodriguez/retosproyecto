@@ -26,11 +26,11 @@
 
                     <!--Information of status:-->
                     <Label id="statusLbl" text="{i18n>status}" />
-                    <Input id="inDetailStatus" value="{listModel>estado}" width="50%" />
+                    <Input id="inDetailStatus" value="{path: 'listModel>estado', formatter: '.formatter.formatState'}" width="50%" />
                     
                     <!--Information of price:-->
                     <Label id="priceLbl" text="{i18n>price}" />
-                    <Input id="inDetailPrice" value="{listModel>precio}" type="Number" width="50%"/>
+                    <Input id="inDetailPrice" value="{path: 'listModel>precio', formatter: '.formatter.formatPrice' }" type="Number" width="50%"/>
                 </f:content>
             </f:SimpleForm>
         </content>

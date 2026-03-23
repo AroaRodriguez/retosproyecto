@@ -1,12 +1,15 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History", 
-    "sap/m/MessageToast"
-], function (Controller, History, MessageToast) {
+    "sap/m/MessageToast", 
+    "retosproyecto/util/formatter"
+], function (Controller, History, MessageToast, formatter) {
     "use strict";
+    
 
     return Controller.extend("retosproyecto.controller.Detail", {
-
+        formatter: formatter, 
+        
         onInit: function () {
             //Route
             const oRouter = this.getOwnerComponent().getRouter();
