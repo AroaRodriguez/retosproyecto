@@ -85,7 +85,7 @@ sap.ui.define([
 
 
         // Function fragment
-        HelpRequest: async function (oEvent) {
+        helpRequest: async function (oEvent) {
             //Save an object Input that trigger event 
             this._oInputSource = oEvent.getSource();
 
@@ -129,7 +129,13 @@ sap.ui.define([
         },
 
         onItemPress: function (oEvent) {
-            MessageToast.show("Detalle de la solicitud seleccionado");
+            const oItem = oEvent.getSource();
+            const oContext = oItem.getBindingContext("listModel");
+            const sIdRequest = oContext.getProperty("id");
+            const oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("RouteDetail", {
+                requestId: sIdRequest
+            });
         },
 
         //---------------------------------------------------CRUD METHOD---------------------------------------------------------------------

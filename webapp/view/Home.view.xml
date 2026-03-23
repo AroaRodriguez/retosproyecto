@@ -17,10 +17,9 @@
 
                     <fb:FilterGroupItem id="TipologyFilter" name="Tipology" label="{i18n>typology}" groupName="G1" visibleInFilterBar="true">
                         <fb:control>
-                             <Input id="inTypology" showValueHelp="true" valueHelpRequest=".HelpRequest" placeholder="tipo"  /> 
+                             <Input id="inTypology" showValueHelp="true" valueHelpRequest=".helpRequest" placeholder="tipo"  /> 
                         </fb:control>
                     </fb:FilterGroupItem>
-<!--Falta ingles-->
                     <fb:FilterGroupItem id="CategoryFilter" name="Category" label="{i18n>category}" groupName="G1" visibleInFilterBar="true">
                         <fb:control>
                             <ComboBox id="cbCategorizacion" items="{filtradoModel>/CategoriasSet}"> <!-- Combo box de categorización-->
@@ -93,7 +92,7 @@
                     <Text id="categoria2" text="{listModel>categoria}" />
                     <ObjectStatus id="objectEstado"
                         text="{listModel>estado}"
-                        state="{path: 'listModel>estado', formatter: '.formatState'}" /> <!--Creada función lógica del estado-->
+                        state="{path: 'listModel>estado', formatter: '.formatState'}" /> <!--Create function of stattus-->
                     <ObjectNumber id="objectNumero"
                         number="{listModel>precio}"
                         unit="EUR"
