@@ -7,12 +7,13 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/m/MessageBox",
     "sap/ui/core/Fragment",
-    "sap/ui/core/util/File"
+    "retosproyecto/util/formatter"
 
-], function (Controller, MessageToast, JSONModel, Filter, FilterOperator, MessageBox, Fragment, File) {
+], function (Controller, MessageToast, JSONModel, Filter, FilterOperator, MessageBox, Fragment, formatter) {
     "use strict";
 
     return Controller.extend("retosproyecto.controller.Home", {
+        formatter: formatter,
 
         onInit: function () {
 
@@ -113,18 +114,6 @@ sap.ui.define([
         },
 
 
-
-        // Añadir los colores según tipologia
-        formatState: function (sEstado) {
-            if (!sEstado) return "None";
-
-            switch (sEstado) {
-                case "Aprobado": return "Success"; // Verde
-                case "Rechazado": return "Error";   // Rojo
-                case "Pendiente": return "Warning"; // Naranja
-                default: return "Information";      // Azul
-            }
-        },
 
         onItemPress: function (oEvent) {
             const oItem = oEvent.getSource();
