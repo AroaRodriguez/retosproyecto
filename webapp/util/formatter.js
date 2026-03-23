@@ -14,14 +14,14 @@ sap.ui.define([], function () {
         },
 
         // Format state 
-        formatState: function (sEstado) {
-            if (!sEstado) return "None";
+        formatState: function (sStatus) {
+            if (!sStatus) return "None";
 
-            switch (sEstado) {
-                case "Aprobado": return "Success"; // Verde
-                case "Rechazado": return "Error";   // Rojo
-                case "Pendiente": return "Warning"; // Naranja
-                default: return "Information";      // Azul
+            switch (sStatus) {
+                case "Aprobado": return "Success"; // Green
+                case "Rechazado": return "Error";   // Red
+                case "Pendiente": return "Warning"; // Orange
+                default: return "Information";      // Blue
             }
         }
 
