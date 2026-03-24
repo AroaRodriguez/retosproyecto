@@ -11,7 +11,6 @@ sap.ui.define([
     return BaseController.extend("retosproyecto.controller.Detail", {
         formatter: formatter, 
 
-
         onInit: function () {
             //Route
             const oRouter = this.getOwnerComponent().getRouter();
