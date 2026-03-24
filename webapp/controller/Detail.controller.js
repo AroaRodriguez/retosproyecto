@@ -2,14 +2,16 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History", 
     "sap/m/MessageToast", 
-    "retosproyecto/util/formatter"
-], function (Controller, History, MessageToast, formatter) {
+    "retosproyecto/util/formatter", 
+    "retosproyecto/controller/BaseController", 
+], function (Controller, History, MessageToast, formatter, BaseController) {
     "use strict";
     
 
-    return Controller.extend("retosproyecto.controller.Detail", {
+    return BaseController.extend("retosproyecto.controller.Detail", {
         formatter: formatter, 
-        
+
+
         onInit: function () {
             //Route
             const oRouter = this.getOwnerComponent().getRouter();
@@ -61,6 +63,12 @@ sap.ui.define([
                 const oRouter = this.getOwnerComponent().getRouter();
                 oRouter.navTo("RouteHome", {}, true); //force to navegation in "RouteHome" in manifest document. 
             }
+        }, 
+
+        EditDetailInfo: function () {
+
         }
+
+
     });
 });

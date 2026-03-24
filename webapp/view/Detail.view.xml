@@ -11,26 +11,33 @@
           navButtonPress=".onNavBack"> <!--Function button go back-->
         <content>
         <f:SimpleForm id="formDetail" editable="true" layout="ResponsiveGridLayout" title="{i18n>requestDetail}" labelSpanL="4" labelSpanM="4" labelSpanS="12" emptySpanL="4" emptySpanM="4" emptySpanS="0">
+                <f:toolbar>
+                <Toolbar id ="tbDetail">
+                <Button id = "btnEditDetail" text="{i18n>edit}"
+                icon="sap-icon://edit" press=".EditDetailInfo" type="Transparent"/>
+                </Toolbar>
+                </f:toolbar>
                 <f:content>
-                    <!--Information of request:-->
+                <!--Information of request:-->
                     <Label id="requestLbl" text="{i18n>request}" />
-                    <Input id="inDetailId" value="{listModel>id}" editable="false" width="50%" /> 
+                    <Text id="inDetailId" text="{listModel>id}" width="50%" /> 
 
                     <!--Information of typology:-->
                     <Label id="typologyLbl" text="{i18n>typology}" />
-                    <Input id="inDetailTypology" value="{listModel>tipologia}" width="50%" />
+                    <Text id="inDetailTypology" text="{listModel>tipologia}" width="50%" />
 
                     <!--Information of category:-->
                     <Label id="categoryLbl" text="{i18n>category}" />
-                    <Input id="inDetailCategory" value="{listModel>categoria}" width="50%" />
+                    <Text id="inDetailCategory" text="{listModel>categoria}" width="50%" />
 
                     <!--Information of status:-->
                     <Label id="statusLbl" text="{i18n>status}" />
-                    <Input id="inDetailStatus" value="{path: 'listModel>estado', formatter: '.formatter.formatState'}" width="50%" />
+                    <ObjectStatus id="inDetailStatus" text="{path: 'listModel>estado', formatter: '.formatter.formatState'}" />
                     
                     <!--Information of price:-->
                     <Label id="priceLbl" text="{i18n>price}" />
-                    <Input id="inDetailPrice" value="{path: 'listModel>precio', formatter: '.formatter.formatPrice' }" type="Number" width="50%"/>
+                    <ObjectNumber id="inDetailPrice" number="{path: 'listModel>precio', formatter: '.formatter.formatPrice' }" 
+                    unit= "EUR"/>
                 </f:content>
             </f:SimpleForm>
         </content>
