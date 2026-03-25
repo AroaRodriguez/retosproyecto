@@ -11,51 +11,64 @@ sap.ui.define([
         //Function cleanFormulary
         cleanFormulary: function () {
             const aFieldsIds = ["newId", "newTypology", "newPrice"];
-
             aFieldsIds.forEach(id => {
                 const oControl = this.byId(id);
-
                 if (oControl) {
                     oControl.setValue("");
                     oControl.setValueState("None");
                 }
 
             });
-
-            const oCat = this.byId("newCategory");
-            if (oCat) {
-                oCat.setSelectedKey("");
-                oCat.setValueState("None");
-            }
-
-            const oStat = this.byId("newStatus");
-
-            if (oStat) {
-                oStat.setSelectedKey("");
-                oStat.setValueState("None");
-            }
-
+            const aCombos = ["newCategory", "newStatus"];
+            aCombos.forEach(id => {
+                const oControl = this.byId(id);
+                if (oControl) {
+                    oControl.setSelectedKey("");
+                    oControl.setValueState("None");
+                }
+            });
         },
+
+
+        //function get data Model (listModel): 
+
+        getListData: function () {
+            const oModel = this.getOwnerComponent().getModel("listModel");
+
+            if (oModel) {
+                return oModel.getProperty("/SolicitudesSet") || [];
+            }
+            return [];
+        }, 
+
         
         //Function validate formulary 
          validationFormulary: function (oEvent) {
-            let bIsValid = true;
-            const oModel = this.getView().getModel("listModel");
-            const aData = oModel ? oModel.getProperty("/SolicitudesSet") || [] : [];
+           const aData = this.getListData();
+           const isEditing = this.byId("newId") && !this.byId("newId").getEditable();
+           
+           const aRules = this.getValidationRules(aData, isEditing);
+           let aFieldsToValidate = aRules;
+           
+           if (oEvent && oEvent.getSource) {
+                const sControlId = oEvent.getSource().getId();
+                aFieldsToValidate = aRules.filter(rule => sControlId.includes(rule.id));
+            }
+           
+            return this.applyValidation(aFieldsToValidate);
+        },
 
-            const isEditing = this.byId("newId") && !this.byId("newId").getEditable();
 
-
-            const aRules = [
+        getValidationRules: function (aData, isEditing) {
+            return [
                 {
                     id: "newId",
                     check: (val) => {
                         if (!val || val.length !== 4) return false;
-                        if (!isEditing){ 
-                        const bExists = aData.some(item => item.id === val); //If id exists, couldn't create
-                        return !bExists;    
+                        if (!isEditing) { 
+                            return !aData.some(item => item.id === val); 
                         }
-                        return true;
+                        return true; 
                     },
                     msg: "El ID es obligatorio y único, debe tener al menos 4 caracteres"
                 },
@@ -71,16 +84,12 @@ sap.ui.define([
                 }
             ];
 
-            let aFieldsToValidate = aRules;
+        },
 
-            if (oEvent && oEvent.getSource) {
-                const sControlId = oEvent.getSource().getId();
-                aFieldsToValidate = aRules.filter(rule => sControlId.includes(rule.id));
-            }
-
-            aFieldsToValidate.forEach(rule => {
+        applyValidation: function(aFields){
+          let bIsValid = true;
+            aFields.forEach(rule => {
                 const oControl = this.byId(rule.id);
-
                 if (oControl) {
                     const sValue = oControl.getValue ? oControl.getValue().trim() : "";
                     if (!rule.check(sValue)) {
@@ -92,9 +101,11 @@ sap.ui.define([
                     }
                 }
             });
-            return bIsValid;
+            return bIsValid;  
+
         },
 
+        //Function openRequestDialog
         openRequestDialog: function (oContext) {
             const oView = this.getView();
             this.cleanFormulary(); 
@@ -114,6 +125,7 @@ sap.ui.define([
             }
         },
 
+        //prepareDialog: function has information of Model to prepare dialog
         prepareDialog: function (oContext) {
             this._editContext = oContext;
             this.cleanFormulary();
@@ -181,47 +193,55 @@ sap.ui.define([
 
         //Function CRUD Save dialog
         newSave: function () {
-            const oModel = this.getView().getModel("listModel");
-
-            const oContext = this._editContext;
-
             if (!this.validationFormulary()) {
                 MessageToast.show("Revisa los campos marcados en rojo antes de guardar");
                 return;
             }
 
+            const oModel = this.getOwnerComponent().getModel("listModel");
+            const oContext = this._editContext;
+
             if (!oContext) {
-                const aData = oModel.getProperty("/SolicitudesSet");
-                const oNewRequest = {
-                    id: this.byId("newId").getValue(),
-                    tipologia: this.byId("newTypology").getValue().trim(),
-                    categoria: this.byId("newCategory").getSelectedKey(),
-                    estado: this.byId("newStatus").getSelectedKey(),
-                    precio: parseFloat(this.byId("newPrice").getValue()) || 0
-                };
-
-                if (!oNewRequest.id) {
-                    MessageToast.show("El ID es obligatorio");
-                    return;
-                }
-
-                //We add to the array and update the model listModel.json
-                aData.push(oNewRequest);
-                oModel.setProperty("/SolicitudesSet", aData);
-                MessageToast.show("Solicitud " + oNewRequest.id + " creada con éxito");
+                this.createRequest(oModel); 
             } else {
-                //Update in edit method
-                const sPath = oContext.getPath();
-                oModel.setProperty(sPath+"/tipologia", this.byId("newTypology").getValue().trim());
-                oModel.setProperty(sPath+"/categoria", this.byId("newCategory").getSelectedKey());
-                oModel.setProperty(sPath+"/estado", this.byId("newStatus").getSelectedKey());
-                oModel.setProperty(sPath+"/precio", parseFloat(this.byId("newPrice").getValue()||0));
-
-                MessageToast.show("Solicitud " + oContext.getProperty("id") + " actualizada");
+                this.updateRequest(oModel, oContext); 
             }
 
-            //Call the function close dialog
             this.newDialogClose();
+
+        }, 
+        
+        //function createRequest in Home.view:
+
+        createRequest: function(oModel){
+            const aData = oModel.getProperty("/SolicitudesSet");
+            const sId = this.byId("newId").getValue().trim();
+
+            const oNewRequest = {
+                id: sId,
+                tipologia: this.byId("newTypology").getValue().trim(),
+                categoria: this.byId("newCategory").getSelectedKey(),
+                estado: this.byId("newStatus").getSelectedKey(),
+                precio: parseFloat(this.byId("newPrice").getValue()) || 0
+            };
+
+            aData.push(oNewRequest);
+            oModel.setProperty("/SolicitudesSet", aData);
+            MessageToast.show("Solicitud " + sId + " creada con éxito");
+
+        }, 
+
+        //function updateRequest in DetailView
+
+        updateRequest: function(oModel, oContext) {
+            const sPath = oContext.getPath();
+            
+            oModel.setProperty(sPath + "/tipologia", this.byId("newTypology").getValue().trim());
+            oModel.setProperty(sPath + "/categoria", this.byId("newCategory").getSelectedKey());
+            oModel.setProperty(sPath + "/estado", this.byId("newStatus").getSelectedKey());
+            oModel.setProperty(sPath + "/precio", parseFloat(this.byId("newPrice").getValue()) || 0);
+
+            MessageToast.show("Solicitud " + oContext.getProperty("id") + " actualizada");
         }
     });
 });

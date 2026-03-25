@@ -23,8 +23,7 @@ sap.ui.define([
             //Extract route arguments and retrieve the JSON model Data. 
             const oArguments = oEvent.getParameter("arguments");
             const sRequestId = oArguments.requestId;
-            const oModel = this.getOwnerComponent().getModel("listModel");
-            const aData = oModel.getProperty("/SolicitudesSet");
+            const aData = this.getListData();
 
             //Check if the data array is populated
             if (aData.length > 0) {
@@ -70,7 +69,7 @@ sap.ui.define([
             if (oContext){
 
                 this.openRequestDialog(oContext);
-                
+
             }
 
         }

@@ -31,9 +31,8 @@ sap.ui.define([
         //Function new modelJSON to add category values from List.Json
         loadDynamicCategory: function () {
             //Recuperamos el modelo listModel
-            const oListModel = this.getOwnerComponent().getModel("listModel");
-            const aData = oListModel.getProperty("/SolicitudesSet");
-
+            const aData = this.getListData();
+            
             if (aData.length > 0) {
                 //Extraer y limpiar duplicados con Set
                 const aUniqueCategory = [...new Set(aData.map(item => item.categoria))]; //Spread (concatenar arrays)+ funcion mapeo

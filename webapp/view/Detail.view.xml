@@ -8,36 +8,43 @@
     <Page id="pageDetail"
           title="{i18n>detailTitle}" 
           showNavButton="true"
-          navButtonPress=".onNavBack"> <!--Function button go back-->
+          navButtonPress=".onNavBack"> 
         <content>
-        <f:SimpleForm id="formDetail" editable="true" layout="ResponsiveGridLayout" title="{i18n>requestDetail}" labelSpanL="4" labelSpanM="4" labelSpanS="12" emptySpanL="4" emptySpanM="4" emptySpanS="0">
+            <f:SimpleForm id="formDetail" 
+              editable="false" 
+              layout="ResponsiveGridLayout" 
+              labelSpanXL="2" labelSpanL="3" labelSpanM="4" labelSpanS="12" 
+              emptySpanXL="6" emptySpanL="5" emptySpanM="0" emptySpanS="0">
+                
                 <f:toolbar>
-                <Toolbar id ="tbDetail">
-                <Button id = "btnEditDetail" text="{i18n>edit}"
-                icon="sap-icon://edit" press=".EditDetailInfo" type="Transparent"/>
-                </Toolbar>
+                    <Toolbar id ="tbDetail">
+                        <Title id="titleDetail" text="{i18n>requestDetail}" level="H4" titleStyle="H4" />
+                        
+                        <ToolbarSpacer id="spacer" />
+                        
+                        <Button id="btnEditDetail" text="{i18n>edit}" icon="sap-icon://edit" press=".EditDetailInfo" type="Transparent"/>
+                    </Toolbar>
                 </f:toolbar>
+
                 <f:content>
-                <!--Information of request:-->
                     <Label id="requestLbl" text="{i18n>request}" />
-                    <Text id="inDetailId" text="{listModel>id}" width="50%" /> 
+                    <Text id="inDetailId" text="{listModel>id}" /> 
 
-                    <!--Information of typology:-->
                     <Label id="typologyLbl" text="{i18n>typology}" />
-                    <Text id="inDetailTypology" text="{listModel>tipologia}" width="50%" />
+                    <Text id="inDetailTypology" text="{listModel>tipologia}" />
 
-                    <!--Information of category:-->
                     <Label id="categoryLbl" text="{i18n>category}" />
-                    <Text id="inDetailCategory" text="{listModel>categoria}" width="50%" />
+                    <Text id="inDetailCategory" text="{listModel>categoria}" />
 
-                    <!--Information of status:-->
                     <Label id="statusLbl" text="{i18n>status}" />
-                    <ObjectStatus id="inDetailStatus" text="{path: 'listModel>estado', formatter: '.formatter.formatState'}" />
+                    <ObjectStatus id="inDetailStatus" 
+                                  text="{listModel>estado}" 
+                                  state="{path: 'listModel>estado', formatter: '.formatter.formatState'}" />
                     
-                    <!--Information of price:-->
                     <Label id="priceLbl" text="{i18n>price}" />
-                    <ObjectNumber id="inDetailPrice" number="{path: 'listModel>precio', formatter: '.formatter.formatPrice' }" 
-                    unit= "EUR"/>
+                    <ObjectNumber id="inDetailPrice" 
+                                  number="{path: 'listModel>precio', formatter: '.formatter.formatPrice' }" 
+                                  unit="EUR"/>
                 </f:content>
             </f:SimpleForm>
         </content>
