@@ -21,7 +21,7 @@ sap.ui.define([
 
             //Indicamos la ruta y funcion loadDynamicCategory
             const oRoute = this.getOwnerComponent().getRouter();
-            oRoute.getRoute("RouteHome").attachPatternMatched(this.loadDynamicCategory, this); //Busca la ruta en el manifest y dispara el evento --> cuando salte el evento que ejecute la función
+            oRoute.getRoute("RouteHome").attachPatternMatched(this.loadDynamicCategory, this); 
         },
 
         onAfterRendering: function () {
@@ -32,7 +32,7 @@ sap.ui.define([
         loadDynamicCategory: function () {
             //Recuperamos el modelo listModel
             const aData = this.getListData();
-            
+
             if (aData.length > 0) {
                 //Extraer y limpiar duplicados con Set
                 const aUniqueCategory = [...new Set(aData.map(item => item.categoria))]; //Spread (concatenar arrays)+ funcion mapeo
