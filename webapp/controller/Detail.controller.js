@@ -2,14 +2,15 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History", 
     "sap/m/MessageToast", 
-    "retosproyecto/util/formatter"
-], function (Controller, History, MessageToast, formatter) {
+    "retosproyecto/util/formatter", 
+    "retosproyecto/controller/BaseController", 
+], function (Controller, History, MessageToast, formatter, BaseController) {
     "use strict";
     
 
-    return Controller.extend("retosproyecto.controller.Detail", {
+    return BaseController.extend("retosproyecto.controller.Detail", {
         formatter: formatter, 
-        
+
         onInit: function () {
             //Route
             const oRouter = this.getOwnerComponent().getRouter();
@@ -22,8 +23,7 @@ sap.ui.define([
             //Extract route arguments and retrieve the JSON model Data. 
             const oArguments = oEvent.getParameter("arguments");
             const sRequestId = oArguments.requestId;
-            const oModel = this.getOwnerComponent().getModel("listModel");
-            const aData = oModel.getProperty("/SolicitudesSet");
+            const aData = this.getListData();
 
             //Check if the data array is populated
             if (aData.length > 0) {
@@ -61,6 +61,19 @@ sap.ui.define([
                 const oRouter = this.getOwnerComponent().getRouter();
                 oRouter.navTo("RouteHome", {}, true); //force to navegation in "RouteHome" in manifest document. 
             }
+        }, 
+
+        EditDetailInfo: function () {
+            const oContext = this.getView().getBindingContext("listModel");
+
+            if (oContext){
+
+                this.openRequestDialog(oContext);
+
+            }
+
         }
+
+
     });
 });
