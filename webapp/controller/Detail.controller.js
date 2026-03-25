@@ -65,6 +65,13 @@ sap.ui.define([
         }, 
 
         EditDetailInfo: function () {
+            const oContext = this.getView().getBindingContext("listModel");
+
+            if (oContext){
+
+                this.openRequestDialog(oContext);
+                
+            }
 
         }
 

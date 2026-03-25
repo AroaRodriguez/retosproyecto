@@ -10,7 +10,7 @@
                     <Input id="newId" placeholder="Ej: 1005" required="true" liveChange=".validationFormulary" />
 
                     <Label id="newType" text="{i18n>typology}" />
-                    <Input id="newTypology" liveChange=".validationFormulary" />
+                    <Input id="newTypology"  liveChange=".validationFormulary" />
 
                     <Label id="newCat" text="{i18n>category}" />
                     <ComboBox id="newCategory">

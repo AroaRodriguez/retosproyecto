@@ -43,13 +43,19 @@ sap.ui.define([
             const oModel = this.getView().getModel("listModel");
             const aData = oModel ? oModel.getProperty("/SolicitudesSet") || [] : [];
 
+            const isEditing = this.byId("newId") && !this.byId("newId").getEditable();
+
+
             const aRules = [
                 {
                     id: "newId",
                     check: (val) => {
                         if (!val || val.length !== 4) return false;
+                        if (!isEditing){ 
                         const bExists = aData.some(item => item.id === val); //If id exists, couldn't create
-                        return !bExists;
+                        return !bExists;    
+                        }
+                        return true;
                     },
                     msg: "El ID es obligatorio y único, debe tener al menos 4 caracteres"
                 },
@@ -91,7 +97,7 @@ sap.ui.define([
 
         openRequestDialog: function (oContext) {
             const oView = this.getView();
-            this.cleanFormulary(); // Limpiamos siempre antes de abrir
+            this.cleanFormulary(); 
 
             if (!this._oDialog) {
                 Fragment.load({
@@ -101,13 +107,30 @@ sap.ui.define([
                 }).then(function (oDialog) {
                     this._oDialog = oDialog;
                     oView.addDependent(this._oDialog);
-                    this._oDialog.setBindingContext(oContext, "listModel");
-                    this._oDialog.open();
+                    this.prepareDialog(oContext);
                 }.bind(this));
             } else {
-                this._oDialog.setBindingContext(oContext, "listModel");
-                this._oDialog.open();
+               this.prepareDialog(oContext);
             }
+        },
+
+        prepareDialog: function (oContext) {
+            this._editContext = oContext;
+            this.cleanFormulary();
+
+            if (oContext){
+                this.byId("newId").setValue(oContext.getProperty("id"));
+                this.byId("newId").setEditable(false);
+                this.byId("newTypology").setValue(oContext.getProperty("tipologia"));
+                this.byId("newCategory").setSelectedKey(oContext.getProperty("categoria"));
+                this.byId("newStatus").setSelectedKey(oContext.getProperty("estado"));
+                this.byId("newPrice").setValue(oContext.getProperty("precio"));
+            } else {
+                this._editContext = null;
+                this.byId("newId").setEditable(true);
+
+            }
+            this._oDialog.open();
         },
 
 
@@ -151,13 +174,16 @@ sap.ui.define([
             if (this._oDialog){
                 this._oDialog.close();
             }
-        
+            this.cleanFormulary();
+            this._editContext = null;
+            
         },
 
         //Function CRUD Save dialog
         newSave: function () {
             const oModel = this.getView().getModel("listModel");
-            const oContext = this._oDialog.getBindingContext("listModel");
+
+            const oContext = this._editContext;
 
             if (!this.validationFormulary()) {
                 MessageToast.show("Revisa los campos marcados en rojo antes de guardar");
@@ -184,6 +210,13 @@ sap.ui.define([
                 oModel.setProperty("/SolicitudesSet", aData);
                 MessageToast.show("Solicitud " + oNewRequest.id + " creada con éxito");
             } else {
+                //Update in edit method
+                const sPath = oContext.getPath();
+                oModel.setProperty(sPath+"/tipologia", this.byId("newTypology").getValue().trim());
+                oModel.setProperty(sPath+"/categoria", this.byId("newCategory").getSelectedKey());
+                oModel.setProperty(sPath+"/estado", this.byId("newStatus").getSelectedKey());
+                oModel.setProperty(sPath+"/precio", parseFloat(this.byId("newPrice").getValue()||0));
+
                 MessageToast.show("Solicitud " + oContext.getProperty("id") + " actualizada");
             }
 
